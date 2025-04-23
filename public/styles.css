@@ -1,0 +1,293 @@
+/* CSS Variables */
+:root {
+  --primary-color: #008080; /* Teal */
+  --primary-hover: #006666; /* Darker Teal */
+  --background-color: #f0f2f5;
+  --text-color: #333;
+  --secondary-color: #666;
+  --light-background: #fff;
+  --light-border: #ddd;
+  --dark-background: #1c1c1c;
+  --dark-text: #e4e6eb;
+  --dark-secondary: #2a2a2a;
+  --dark-border: #444;
+  --glow: 0 0 10px rgba(0, 128, 128, 0.6);
+  --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  --transition-speed: 0.3s;
+}
+
+/* Dark Mode Variables */
+body.dark-mode {
+  --background-color: var(--dark-background);
+  --text-color: var(--dark-text);
+  --secondary-color: var(--dark-secondary);
+  --light-background: var(--dark-secondary);
+  --light-border: var(--dark-border);
+}
+
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: var(--background-color);
+  color: var(--text-color);
+  transition: background var(--transition-speed), color var(--transition-speed);
+}
+
+/* Login Page Styling */
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+  padding: 20px;
+  background: linear-gradient(135deg, #008080, #004d4d); /* Teal gradient */
+  color: #fff;
+  animation: fadeIn 1s ease-in-out;
+}
+
+/* Login Box */
+.login-box {
+  background: var(--light-background);
+  padding: 40px 30px;
+  border-radius: 20px;
+  box-shadow: var(--card-shadow);
+  text-align: center;
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Spacing between elements */
+  animation: fadeIn 1s ease-in-out;
+  border: 1px solid var(--light-border);
+  transition: background var(--transition-speed);
+}
+
+.login-box h2 {
+  color: var(--primary-color);
+  font-size: 28px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  margin-bottom: 10px;
+  text-shadow: 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+/* Input Fields and Dropdown */
+.login-box input[type="text"],
+.login-box select {
+  padding: 12px;
+  width: 100%;
+  border-radius: 30px; /* Rounded inputs */
+  border: 1px solid var(--light-border);
+  font-size: 14px;
+  background: var(--light-background);
+  color: var(--text-color);
+  transition: all 0.3s ease;
+}
+
+.login-box input[type="text"]:focus,
+.login-box select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 8px rgba(0, 128, 128, 0.5); /* Teal glow */
+}
+
+/* File Input Styling */
+.file-input-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+}
+
+.file-input-wrapper input[type="file"] {
+  display: none; /* Hide the default file input */
+}
+
+.file-input-wrapper label {
+  display: inline-block;
+  padding: 12px 20px;
+  background: var(--primary-color);
+  color: #fff;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 30px; /* Rounded button */
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 128, 128, 0.3);
+}
+
+.file-input-wrapper label:hover {
+  background: var(--primary-hover);
+  box-shadow: 0 6px 15px rgba(0, 102, 102, 0.4); /* Stronger shadow on hover */
+  transform: translateY(-2px); /* Lift effect */
+}
+
+.file-input-wrapper .file-name {
+  display: block;
+  margin-top: 5px;
+  font-size: 12px;
+  color: var(--secondary-color);
+  font-style: italic;
+}
+
+/* Login Button */
+.login-box button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 30px; /* Rounded button */
+  font-size: 14px;
+  font-weight: bold;
+  background: var(--primary-color);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.login-box button:hover {
+  background: var(--primary-hover);
+  box-shadow: 0 6px 15px rgba(0, 102, 102, 0.4); /* Stronger shadow on hover */
+  transform: translateY(-2px); /* Lift effect */
+}
+
+/* Chat Header */
+.chat-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  background: var(--light-background);
+  border-bottom: 1px solid var(--light-border);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.chat-header .avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+/* Messages */
+#messages {
+  flex: 1;
+  list-style: none;
+  padding: 12px;
+  margin: 0;
+  overflow-y: auto;
+  background: var(--light-background);
+  border-top: 1px solid var(--light-border);
+  border-bottom: 1px solid var(--light-border);
+  min-height: 300px;
+}
+
+#messages li {
+  margin-bottom: 10px;
+  padding: 10px;
+  background: var(--primary-color);
+  color: white;
+  border-radius: 12px;
+  max-width: 80%;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#messages li strong {
+  color: #fff;
+  margin-right: 5px;
+}
+
+#messages li img.avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+}
+
+/* Typing Indicator */
+#typingIndicator {
+  padding: 4px 16px;
+  font-style: italic;
+  color: var(--secondary-color);
+}
+
+/* Message Form */
+form#messageForm {
+  display: flex;
+  gap: 10px;
+  padding: 12px;
+  background: var(--light-background);
+  border-top: 1px solid var(--light-border);
+}
+
+form#messageForm input[type="text"] {
+  flex: 1;
+  padding: 10px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--light-border);
+  font-size: 14px;
+  outline: none;
+}
+
+form#messageForm button {
+  padding: 10px 20px;
+  background: var(--primary-color);
+  border: none;
+  color: #fff;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background var(--transition-speed);
+}
+
+form#messageForm button:hover {
+  background: var(--primary-hover);
+}
+
+/* Dark Mode Toggle */
+.dark-mode-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px;
+  font-size: 14px;
+  background: var(--light-background);
+  border-top: 1px solid var(--light-border);
+  justify-content: center;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .login-box {
+    width: 90%;
+    padding: 30px 20px;
+  }
+
+  .login-box h2 {
+    font-size: 22px;
+  }
+
+  .login-box input,
+  .login-box select,
+  .login-box button {
+    font-size: 12px;
+    padding: 10px;
+  }
+
+  .file-input-wrapper label {
+    font-size: 12px;
+    padding: 10px 14px;
+  }
+
+  .file-input-wrapper .file-name {
+    font-size: 10px;
+  }
+}

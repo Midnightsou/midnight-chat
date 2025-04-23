@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Chat App</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="login-page">
+  <div class="login-box">
+    <h2>Welcome to Chat</h2>
+    <form id="loginForm">
+      <!-- Username Input -->
+      <input type="text" id="username" placeholder="Enter your username" required>
+
+      <!-- Status Dropdown -->
+      <label for="status">Select your status:</label>
+      <select id="status">
+        <option value="Online">Online</option>
+        <option value="Away">Away</option>
+        <option value="Do Not Disturb">Do Not Disturb</option>
+      </select>
+
+      <!-- File Input -->
+      <div class="file-input-wrapper">
+        <input type="file" id="avatar" accept="image/*">
+        <label for="avatar">Choose File</label>
+        <span class="file-name" id="fileName">No file chosen</span>
+      </div>
+
+      <!-- Login Button -->
+      <button type="submit">Join Chat</button>
+    </form>
+
+    <!-- Dark Mode Toggle -->
+    <div class="dark-mode-toggle">
+      <label for="darkMode">Dark Mode:</label>
+      <input type="checkbox" id="darkMode">
+    </div>
+  </div>
+
+  <script>
+    // Handle Dark Mode Toggle
+    const darkModeToggle = document.getElementById('darkMode');
+    const body = document.body;
+
+    // Load saved theme preference
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      body.classList.add('dark-mode');
+      darkModeToggle.checked = true;
+    }
+
+    darkModeToggle.addEventListener('change', () => {
+      if (darkModeToggle.checked) {
+        body.classList.add('dark-mode');
+        localStorage.setItem('theme', 'dark');
+      } else {
+        body.classList.remove('dark-mode');
+        localStorage.setItem('theme', 'light');
+      }
+    });
+
+    // Handle Login Form Submission
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const username = document.getElementById('username').value.trim();
+      const avatar = document.getElementById('avatar').files[0];
+      const status = document.getElementById('status').value;
+
+      if (!username) {
+        alert("Username is required.");
+        return;
+      }
+
+      if (avatar) {
+        const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+        if (!allowedTypes.includes(avatar.type)) {
+          alert("Only JPG, PNG, and GIF files are allowed.");
+          return;
+        }
+
+        const formData = new FormData();
+        formData.append("file", avatar);
+
+        fetch("/upload", {
+          method: "POST",
+          body: formData
+        })
+        .then(res => {
+          if (!res.ok) throw new Error("Failed to upload avatar.");
+          return res.json();
+        })
+        .then(data => {
+          const avatarUrl = data.fileUrl;
+          saveUserAndRedirect(username, avatarUrl, status);
+        })
+        .catch(err => alert("Upload failed: " + err.message));
+      } else {
+        // Use a default avatar if none is uploaded
+        const defaultAvatar = "default-avatar.jpg"; // Ensure this file exists in your public folder
+        saveUserAndRedirect(username, defaultAvatar, status);
+      }
+    });
+
+    function saveUserAndRedirect(username, avatarUrl, status) {
+      localStorage.setItem("username", username);
+      localStorage.setItem("avatar", avatarUrl);
+      localStorage.setItem("status", status);
+      window.location.href = "chat.html";
+    }
+
+    // Update file name display
+    const avatarInput = document.getElementById('avatar');
+    const fileNameDisplay = document.getElementById('fileName');
+
+    avatarInput.addEventListener('change', () => {
+      const fileName = avatarInput.files.length > 0 ? avatarInput.files[0].name : "No file chosen";
+      fileNameDisplay.textContent = fileName;
+    });
+  </script>
+</body>
+</html>
